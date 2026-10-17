@@ -1,0 +1,80 @@
+% IEEE journal-style LaTeX template for "Aura: An AI-based Carbon Footprint Calculator and Short-Term Predictor for India"
+\documentclass[journal]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+
+\title{Aura: An AI-based Carbon Footprint Calculator and Short-Term Predictor for India}
+
+\author{First Author, Second Author, Third Author\\
+Department of AI \& DS, MIT ADT University, Pune, India\\
+Email: \{first, second, third\}@example.edu}% <-this % stops a space
+
+\markboth{Journal of Sustainable Computing,~Vol.~X, No.~X, October~2025}%
+{First Author \MakeLowercase{\textit{et al.}}: Aura: An AI-based Carbon Footprint Calculator and Short-Term Predictor for India}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This paper presents Aura — an end-to-end platform for calculating and predicting personal carbon footprints tailored to the Indian context. Aura integrates a web frontend, a Prisma-backed emission-factor database seeded with India-relevant factors, a deterministic calculator for user activity inputs, and a lightweight, explainable time-series predictor. The design prioritizes reproducibility, transparency, and ease of use for non-expert users. The calculator normalizes inputs, applies authoritative emission factors, returns per-category and total CO$_2$e, and stores results for historical analysis. The predictor implements a linear-trend baseline with confidence estimates and falls back to population averages when user history is sparse. The implementation and seed data are reproducible and available in the associated code repository.
+\end{abstract}
+
+\begin{IEEEkeywords}
+carbon footprint; emission factors; India; prediction; Prisma; Next.js; time-series
+\end{IEEEkeywords}
+
+\section{Introduction}
+Greenhouse gas emissions from daily activities contribute significantly to climate change. Personal carbon calculators help individuals understand their contributions and take corrective action. However, many global calculators lack local relevance. Aura addresses this gap by providing India-specific emission factors, a production-ready user interface, and a lightweight short-term predictor for monthly forecasts.
+
+\section{Related Work}
+Prior research on carbon footprint calculators ranges from static estimators to systems employing machine learning for prediction. India-specific emission data from IPCC, the Central Electricity Authority, and the Ministry of Environment, Forest and Climate Change enhances accuracy and transparency. Aura emphasizes provenance and reproducibility to overcome limitations observed in public tools.
+
+\section{System Architecture and Implementation}
+Aura's architecture follows a modular structure. The frontend uses Next.js and Tailwind CSS for a clean interface. The backend employs Node.js with Prisma ORM for database operations. The emission-factor database stores values categorized by sector and region. An optional microservice supports experimental forecasting models.
+
+\section{Deterministic Emission Calculator}
+The deterministic calculator converts user inputs into standardized units, retrieves relevant emission factors, computes per-item emissions, aggregates totals, and stores the results. This transparent method ensures reproducibility and traceability.
+
+\section{Prediction Model}
+The system includes a linear regression-based predictor that estimates upcoming monthly emissions using historical data. When limited data is available, it reverts to baseline averages. The model balances simplicity, explainability, and computational efficiency.
+
+\section{Data and Emission Factors}
+Emission-factor data includes transportation fuels, grid electricity, cooking fuels, and food items based on Indian databases. Each factor specifies category, subcategory, value (kg CO$_2$e/unit), and source references.
+
+\section{Experiments and Evaluation}
+The platform was tested using synthetic datasets and anonymized logs. Evaluation metrics such as RMSE, MAE, and MAPE were used to measure predictive accuracy. The deterministic calculator underwent unit testing for validation.
+
+\section{Results}
+Results demonstrated that Aura's predictor achieved consistent performance for short-term forecasting. The linear regression model outperformed baseline methods in RMSE and MAE, confirming its suitability for rapid prototyping.
+
+\section{Discussion}
+The linear regression approach offers transparency and low computational cost, making it ideal for server-side prediction. For extended datasets, advanced models with seasonal adjustments can further enhance accuracy.
+
+\section{Future Work}
+Future developments will integrate a federated, privacy-aware learning module combining seasonal decomposition and LSTM-based models. This direction aims to capture regional seasonality and protect user privacy during training.
+
+\section{Limitations and Ethical Considerations}
+Limitations include dependence on emission-factor accuracy, potential input errors, and linear model constraints. Ethical guidelines emphasize user data privacy, minimal personal information collection, and transparent communication of uncertainty.
+
+\section{Conclusion}
+Aura is a reproducible and regionally adapted platform for carbon calculation and short-term prediction. It demonstrates that transparency and reproducibility can coexist with simplicity, supporting environmental awareness and personal accountability.
+
+\begin{thebibliography}{9}
+\bibitem{ipcc2006} IPCC, \emph{2006 IPCC Guidelines for National Greenhouse Gas Inventories}, IGES.
+\bibitem{cea2024} Central Electricity Authority (CEA), \emph{Baseline Carbon Dioxide Emission Database}, v20.0, 2024.
+\bibitem{moefcc} Ministry of Environment, Forest and Climate Change (MoEFCC), \emph{India Biennial Update Reports (BUR)}.
+\bibitem{mulrow2019} J. Mulrow, ``The state of carbon footprint calculators,'' 2019.
+\bibitem{prophet2017} S. J. Taylor and B. Letham, ``Forecasting at Scale (Prophet),'' 2017.
+\bibitem{lstm1997} S. Hochreiter and J. Schmidhuber, ``Long Short-Term Memory,'' \emph{Neural Computation}, 1997.
+\bibitem{mcmahan2017} H. B. McMahan et al., ``Communication-Efficient Learning of Deep Networks from Decentralized Data,'' AISTATS, 2017.
+\bibitem{dwork2014} C. Dwork and A. Roth, \emph{The Algorithmic Foundations of Differential Privacy}, 2014.
+\bibitem{acm2022} A. Biørn-Hansen et al., ``Exploring the Use of a Carbon Footprint Calculator,'' ACM, 2022.
+\end{thebibliography}
+
+\end{document}
